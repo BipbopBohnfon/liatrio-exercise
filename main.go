@@ -25,6 +25,6 @@ func main() {
 	return c.JSON(response)
     })
 
-    // Start the server on port 3000
-    log.Fatal(app.Listen(":3000"))
+    // Start the server on port 80
+    log.Fatal(app.Listen(":80"))
 }
