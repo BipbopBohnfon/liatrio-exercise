@@ -17,7 +17,7 @@ jobs:
       run: docker build . --file Dockerfile --tag liatrio-my-name-chris
 
     - name: Run Container
-      run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris
+      run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris:latest
 
     - name: Push Image to Dockerhub
       run: |
