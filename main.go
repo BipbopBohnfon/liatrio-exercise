@@ -33,7 +33,7 @@ func main() {
 	fmt.Println("Minified Output:", string(minifiedJSON))
 
 	// Return the product as a JSON object
-	return c.JSON(response)
+	return c.JSON(minifiedJSON)
     })
 
     // Start the server on port 80
