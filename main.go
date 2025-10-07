@@ -4,6 +4,7 @@ import (
     "log"
     "time"
     "github.com/gofiber/fiber/v3"
+    "github.com/goccy/go-json"
 )
 
 type Response struct {
@@ -13,9 +14,9 @@ type Response struct {
 
 func main() {
     // Initialize a new Fiber app
-    app := fiber.New() {
-	    JSONEncoder: fiber.DefaultJSONEncoder, // Minifies JSON String
-	}
+    app := fiber.New(fiber.Config{
+	    JSONEncoder: json.Marshal, // Minifies JSON String
+	})
 
     // Define a route for the GET method on the root path '/'
     app.Get("/", func(c fiber.Ctx) error {
