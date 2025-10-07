@@ -10,5 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build Docker Image
+      run: docker build . --file Dockerfile --tag liatrio-my-name-chris
+
+    - name: Run Container
+      run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris
+      
     - name: run tests
       uses: liatrio/github-actions/apprentice-action@master
