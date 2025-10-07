@@ -3,9 +3,9 @@ package main
 import (
     "log"
     "time"
-    "fmt"
+    //"fmt"
     "github.com/gofiber/fiber/v3"
-    "github.com/goccy/go-json"
+    //"github.com/goccy/go-json"
 )
 
 type Response struct {
@@ -15,9 +15,7 @@ type Response struct {
 
 func main() {
     // Initialize a new Fiber app
-    app := fiber.New(fiber.Config{
-	    JSONEncoder: json.Marshal, // Minifies JSON String
-	})
+    app := fiber.New()
 
     // Define a route for the GET method on the root path '/'
     app.Get("/", func(c fiber.Ctx) error {
@@ -26,14 +24,14 @@ func main() {
 			Timestamp: time.Now().UnixMilli(),
 	}
 
-	minifiedJSON, err := json.Marshal(response)
-	if err != nil {
-		fmt.Println("Error marshaling:", err)
-	}
-	fmt.Println("Minified Output:", string(minifiedJSON))
+	//minifiedJSON, err := json.Marshal(response)
+	//if err != nil {
+	//	fmt.Println("Error marshaling:", err)
+	//}
+	//fmt.Println("Minified Output:", string(minifiedJSON))
 
 	// Return the product as a JSON object
-	return c.JSON(string(minifiedJSON))
+	return c.JSON(response)
     })
 
     // Start the server on port 80

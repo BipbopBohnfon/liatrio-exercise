@@ -18,6 +18,11 @@ jobs:
 
     - name: Run Container
       run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris
+
+    - name: Push Image to Dockerhub
+      run: |
+        docker login -u kristoffjohnson -p ${{ secrets.DOCKER_HUB_TOKEN }}
+        docker push kristoffjohnson/liatrio-my-name-chris:latest
       
     - name: run tests
       uses: liatrio/github-actions/apprentice-action@master
