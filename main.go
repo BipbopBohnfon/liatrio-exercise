@@ -8,7 +8,7 @@ import (
 
 type Response struct {
 	Message string "json:\"message\""
-	Timestamp int64 "json:\"time:\""
+	Timestamp int64 "json:\"timestamp:\""
 }
 
 func main() {
