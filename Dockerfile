@@ -19,7 +19,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /liatrio-my-name-chris
 # Remove everything but necessary components from final image
 FROM scratch
 
-copy --from=builder /liatrio-my-name-chris .
+COPY --from=builder /liatrio-my-name-chris .
 
 
 # Optional:
