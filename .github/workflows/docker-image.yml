@@ -26,7 +26,7 @@ jobs:
       run: |
         docker login -u kristoffjohnson -p ${{ secrets.DOCKER_HUB_TOKEN }}
         docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }}
-        docker push kristoffjohnson/liatrio-my-name-chris:latest
+        docker push kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }}
       
     - name: run tests
       uses: liatrio/github-actions/apprentice-action@master
