@@ -13,7 +13,9 @@ type Response struct {
 
 func main() {
     // Initialize a new Fiber app
-    app := fiber.New()
+    app := fiber.New() {
+	    JSONEncoder: fiber.DefaultJSONEncoder, // Minifies JSON String
+	}
 
     // Define a route for the GET method on the root path '/'
     app.Get("/", func(c fiber.Ctx) error {
