@@ -19,6 +19,9 @@ jobs:
     - name: Run Container
       run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris:latest
 
+    - name: Echo Version Number
+      run: echo Version number is ${{ vars.VERSION }}.${{github.run_number }}
+
     - name: Push Image to Dockerhub
       run: |
         docker login -u kristoffjohnson -p ${{ secrets.DOCKER_HUB_TOKEN }}
