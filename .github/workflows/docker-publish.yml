@@ -12,6 +12,11 @@ on:
 #        types:
 #            - closed
 #            - 'releases/**'
+env:
+    PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+    SERVICE: liatrio-my-name-chris
+    REGION: us-west1
+
 jobs:
     deploy:
         #if: github.event.pull_request.merged == true
