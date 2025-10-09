@@ -6,9 +6,18 @@ on:
   pull_request:
     branches: [ "testing" ]
 
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  SERVICE: liatrio-my-name-chris
+  REGION: us-west4
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -18,6 +27,9 @@ jobs:
 
     - name: Run Container
       run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris:latest
+
+    - name: run tests
+      uses: liatrio/github-actions/apprentice-action@v1.0.0
 
     - name: Echo Version Number
       run: echo Version number is ${{ vars.VERSION }}.${{github.run_number }}
@@ -29,6 +41,21 @@ jobs:
         docker push kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }}
         docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:latest
         docker push kristoffjohnson/liatrio-my-name-chris:latest
-      
-    - name: run tests
-      uses: BipbopBohnfon/github-actions/apprentice-action@master
+
+#    - name: Google Auth
+#      uses: google-github-actions/setup-gcloud@v2
+#      with:
+#        project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+#    - name: Configure Docker
+#      run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+
+#    - name: Deploy to Cloud Run
+#      run: |-
+#        gcloud run deploy ${{ env.SERVICE }} \
+#          --project ${{ secrets.GCP_PROJECT_ID }} \
+#          --region ${{ env.REGION }} \
+#          --image kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }} \
+#          --platform managed \
+#          --allow-unauthenticated
+
