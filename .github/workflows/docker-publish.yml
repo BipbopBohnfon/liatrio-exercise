@@ -14,6 +14,7 @@ on:
 #            - 'releases/**'
 env:
     PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+    GCP_SERVICE_ACCOUNT: 'githubaction@gen-lang-client-0653191359.iam.gserviceaccount.com'
     SERVICE: liatrio-my-name-chris
     REGION: us-west1
 
@@ -46,11 +47,14 @@ jobs:
             docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:latest
             docker push kristoffjohnson/liatrio-my-name-chris:latest
 
-        - name: Google Auth
-          uses: google-github-actions/setup-gcloud@v2
-          
+        - name: Google Cloud Auth
+          uses: google-github-actions/auth@v1
           with:
+              credentials_json: ${{ secrets.GCP_CREDENTIALS }}
               project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+        - name: Google Cloud Setup
+          uses: google-github-actions/setup-gcloud@v1
           
         - name: Configure Docker
           run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
