@@ -19,7 +19,7 @@ TODO: Figure out what needs to be written cause... there's not much that a user 
 
 ## Screenshots
 
-<table>
+<table align="center">
   <tr>
 	    <td align="center"><p>Server Code</p><img src="docs/server.png" width="320" alt="Server Code"></td>
     <td align="center"><p>Docker Hub</p><img src="docs/docker.png" width="320" alt="Docker Hub"></td>
