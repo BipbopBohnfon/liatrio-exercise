@@ -6,7 +6,7 @@
 <h1 align="center">Liatrio Apprenticeship Exercise</h1>
 
 <p align="center">
-  <a href="https://github.com/BipbopBohnfon/liatrio-exercise/actions"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/BipbopBohnfon/liatrio-exercise/docker-image.yml?branch=testing"></a>
+  <a href="https://github.com/BipbopBohnfon/liatrio-exercise/actions"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/BipbopBohnfon/liatrio-exercise/docker-image.yml?branch=${{ github.ref_name }}"></a>
 </p>
 
 ## Introduction
