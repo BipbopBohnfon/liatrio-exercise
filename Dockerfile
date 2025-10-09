@@ -27,7 +27,7 @@ COPY --from=builder /liatrio-my-name-chris .
 # But we can document in the Dockerfile what ports
 # the application is going to listen on by default.
 # https://docs.docker.com/reference/dockerfile/#expose
-EXPOSE 80
+EXPOSE 8080
 
 # Run
 CMD ["/liatrio-my-name-chris"]
