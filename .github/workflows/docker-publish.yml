@@ -64,7 +64,7 @@ jobs:
             gcloud run deploy ${{ env.SERVICE }} \
               --project ${{ secrets.GCP_PROJECT_ID }} \
               --region ${{ env.REGION }} \
-              --image kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }} \
+              --image docker.io/kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }} \
               --platform managed \
               --allow-unauthenticated \
               --port 80
