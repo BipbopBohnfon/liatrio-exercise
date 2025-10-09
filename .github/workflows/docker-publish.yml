@@ -34,7 +34,7 @@ jobs:
           run: docker build . --file Dockerfile --tag liatrio-my-name-chris
 
         - name: Run Container
-          run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris:latest
+          run: docker run -d -p 8080:80 --name golang-server liatrio-my-name-chris:latest
 
         - name: Echo Version Number
           run: echo Version number is ${{ vars.VERSION }}.${{github.run_number }}
