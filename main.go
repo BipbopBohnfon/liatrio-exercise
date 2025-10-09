@@ -3,7 +3,9 @@ package main
 import (
     "log"
     "time"
+    //"fmt"
     "github.com/gofiber/fiber/v3"
+    //"github.com/goccy/go-json"
 )
 
 type Response struct {
@@ -22,6 +24,13 @@ func main() {
 			Timestamp: time.Now().UnixMilli(),
 	}
 
+	//minifiedJSON, err := json.Marshal(response)
+	//if err != nil {
+	//	fmt.Println("Error marshaling:", err)
+	//}
+	//fmt.Println("Minified Output:", string(minifiedJSON))
+
+	// Return the product as a JSON object
 	return c.JSON(response)
     })
 
