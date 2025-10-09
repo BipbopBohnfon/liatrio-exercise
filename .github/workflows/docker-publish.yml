@@ -36,19 +36,20 @@ jobs:
             docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:latest
             docker push kristoffjohnson/liatrio-my-name-chris:latest
 
-#    - name: Google Auth
-#      uses: google-github-actions/setup-gcloud@v2
-#      with:
-#        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        - name: Google Auth
+          uses: google-github-actions/setup-gcloud@v2
+          
+          with:
+              project_id: ${{ secrets.GCP_PROJECT_ID }}
+          
+        - name: Configure Docker
+          run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
 
-#    - name: Configure Docker
-#      run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
-
-#    - name: Deploy to Cloud Run
-#      run: |-
-#        gcloud run deploy ${{ env.SERVICE }} \
-#          --project ${{ secrets.GCP_PROJECT_ID }} \
-#          --region ${{ env.REGION }} \
-#          --image kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }} \
-#          --platform managed \
-#          --allow-unauthenticated
+        - name: Deploy to Cloud Run
+          run: |-
+            gcloud run deploy ${{ env.SERVICE }} \
+              --project ${{ secrets.GCP_PROJECT_ID }} \
+              --region ${{ env.REGION }} \
+              --image kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }} \
+              --platform managed \
+              --allow-unauthenticated
