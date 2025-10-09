@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image CI Testing
 
 on:
     push:
@@ -9,11 +9,6 @@ on:
     pull_request:
         branches:
             - testing
-
-env:
-    PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-    SERVICE: liatrio-my-name-chris
-    REGION: us-west4
 
 jobs:
     build:
