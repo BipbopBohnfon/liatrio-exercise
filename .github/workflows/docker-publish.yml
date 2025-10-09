@@ -1,12 +1,17 @@
 name: Deploy
 
 on:
-    pull_request_target:
+    push:
         branches:
-            - master
-        types:
-            - closed
-            - 'releases/**'
+            - testing
+
+#on:
+#    pull_request_target:
+#        branches:
+#            - master
+#        types:
+#            - closed
+#            - 'releases/**'
 jobs:
     deploy:
         if: github.event.pull_request.merged == true
