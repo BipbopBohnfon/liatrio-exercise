@@ -34,7 +34,7 @@ jobs:
           run: docker build . --file Dockerfile --tag liatrio-my-name-chris
 
         - name: Run Container
-          run: docker run -d -p 8080:8080 --name golang-server liatrio-my-name-chris:latest
+          run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris:latest
 
         - name: Echo Version Number
           run: echo Version number is ${{ vars.VERSION }}.${{github.run_number }}
@@ -66,4 +66,5 @@ jobs:
               --region ${{ env.REGION }} \
               --image kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }} \
               --platform managed \
-              --allow-unauthenticated
+              --allow-unauthenticated \
+              --set-env-vars PORT=80
