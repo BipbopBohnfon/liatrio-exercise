@@ -67,4 +67,4 @@ jobs:
               --image kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }} \
               --platform managed \
               --allow-unauthenticated \
-              --set-env-vars PORT=80
+              --port 80
