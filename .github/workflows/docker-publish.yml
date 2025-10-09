@@ -1,17 +1,13 @@
 name: Deploy
 
 on:
-    push:
+    pull_request_target:
         branches:
-            - testing
+            - master
+        types:
+            - closed
+            - 'releases/**'
 
-#on:
-#    pull_request_target:
-#        branches:
-#            - master
-#        types:
-#            - closed
-#            - 'releases/**'
 env:
     PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
     GCP_SERVICE_ACCOUNT: 'githubaction@gen-lang-client-0653191359.iam.gserviceaccount.com'
