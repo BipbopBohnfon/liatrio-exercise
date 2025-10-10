@@ -1,16 +1,11 @@
 name: Deploy
 
 on:
-    push:
+    pull_request_target:
         branches:
-            - testing
-
-#on:
-#    pull_request_target:
-#        branches:
-#            - master
-#        types:
-#            - closed
+            - master
+        types:
+            - closed
 
 env:
     PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
