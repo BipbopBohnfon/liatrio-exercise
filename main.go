@@ -3,34 +3,30 @@ package main
 import (
     "log"
     "time"
-    //"fmt"
+    "math/rand"
     "github.com/gofiber/fiber/v3"
-    //"github.com/goccy/go-json"
 )
 
 type Response struct {
 	Message string "json:\"message\""
 	Timestamp int64 "json:\"timestamp\""
+	Favorite_Color string "json:\"favorite_color\""
 }
 
 func main() {
     // Initialize a new Fiber app
     app := fiber.New()
+    colors := []string{"black", "white", "red", "green", 
+    		       "yellow", "blue", "brown", "orange",
+		       "pink", "purple", "gray"}
 
     // Define a route for the GET method on the root path '/'
     app.Get("/", func(c fiber.Ctx) error {
 	response := Response{
 			Message:  "My name is Christopher Gemperle",
 			Timestamp: time.Now().UnixMilli(),
+			Favorite_Color: colors[rand.Intn(len(colors))],
 	}
-
-	//minifiedJSON, err := json.Marshal(response)
-	//if err != nil {
-	//	fmt.Println("Error marshaling:", err)
-	//}
-	//fmt.Println("Minified Output:", string(minifiedJSON))
-
-	// Return the product as a JSON object
 	return c.JSON(response)
     })
 
