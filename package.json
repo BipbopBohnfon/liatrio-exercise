@@ -4,4 +4,9 @@
     "@semantic-release/github": "^11.0.6",
     "semantic-release": "^24.2.9"
   }
+
+  "scripts": {
+    "build": "echo \'Nothing to Build\'",
+    "semantic-release": "semantic-release"
+  }
 }
