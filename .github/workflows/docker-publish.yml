@@ -1,9 +1,10 @@
 name: Deploy
 
 on:
-    push:
-        tags:
-          - 'v*.*.*'
+    workflow_run:
+        workflows: [Release]
+        types:
+          - completed
 
 env:
     PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -29,13 +30,17 @@ jobs:
           run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris:latest
 
         - name: Echo Version Number
-          run: echo Version number is ${{ vars.VERSION }}.${{github.run_number }}
+          run: |
+              echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+              echo $RELEASE_VERSION
+              echo ${{ env.RELEASE_VERSION }}
+          
 
         - name: Push Image to Dockerhub
           run: |
             docker login -u kristoffjohnson -p ${{ secrets.DOCKER_HUB_TOKEN }}
-            docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }}
-            docker push kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }}
+            docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:${{ env.RELEASE_VERSION }}
+            docker push kristoffjohnson/liatrio-my-name-chris:${{ env.RELEASE_VERSION }}
             docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:latest
             docker push kristoffjohnson/liatrio-my-name-chris:latest
 
@@ -56,7 +61,7 @@ jobs:
             gcloud run deploy ${{ env.SERVICE }} \
               --project ${{ secrets.GCP_PROJECT_ID }} \
               --region ${{ env.REGION }} \
-              --image docker.io/kristoffjohnson/liatrio-my-name-chris:0${{ vars.VERSION }}.${{github.run_number }} \
+              --image docker.io/kristoffjohnson/liatrio-my-name-chris:${{ env.RELEASE_VERSION }} \
               --platform managed \
               --allow-unauthenticated \
               --port 80
