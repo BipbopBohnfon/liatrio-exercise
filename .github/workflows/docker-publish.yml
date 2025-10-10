@@ -1,11 +1,8 @@
 name: Deploy
 
 on:
-    pull_request_target:
-        branches:
-            - master
-        types:
-            - closed
+    release:
+        types: [published]
 
 env:
     PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -14,29 +11,7 @@ env:
     REGION: us-west1
 
 jobs:
-    release:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
-            issues: write
-            pull-requests: write
-        steps:
-          - uses: actions/checkout@v2
-          - uses: actions/setup-node@v2
-            with:
-                node-version: 'lts/*'
-
-          - name: Install Deps
-            run: npm ci
-
-          - name: Run Semantic Release
-            env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            run: npx semantic-release --dry-run
-            
-          
     deploy:
-        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         permissions:
             contents: 'read'
