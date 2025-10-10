@@ -1,8 +1,10 @@
 name: Deploy
 
 on:
-    release:
-        types: [released]
+    workflow_run:
+        workflows: [Release]
+        types:
+          - completed
 
 env:
     PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -27,11 +29,20 @@ jobs:
         - name: Run Container
           run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris:latest
 
+        - name: Get latest tag (including pre-releases)
+          id: latest_tag
+          run: |
+              LATEST_TAG=$(gh api repos/${{ github.repository }}/releases --jq '.[0].tag_name')
+              echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+              echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT  # Optional: keep as output too
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
         - name: Push Image to Dockerhub
           run: |
             docker login -u kristoffjohnson -p ${{ secrets.DOCKER_HUB_TOKEN }}
-            docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:${{ steps.latest_tag.outputs.tag }}
-            docker push kristoffjohnson/liatrio-my-name-chris:${{ steps.latest_tag.outputs.tag }}
+            docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:${{ env.LATEST_TAG }}
+            docker push kristoffjohnson/liatrio-my-name-chris:${{ env.LATEST_TAG }}
             docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:latest
             docker push kristoffjohnson/liatrio-my-name-chris:latest
 
@@ -52,7 +63,7 @@ jobs:
             gcloud run deploy ${{ env.SERVICE }} \
               --project ${{ secrets.GCP_PROJECT_ID }} \
               --region ${{ env.REGION }} \
-              --image docker.io/kristoffjohnson/liatrio-my-name-chris:${{ steps.latest_tag.outputs.tag }} \
+              --image docker.io/kristoffjohnson/liatrio-my-name-chris:${{ env.LATEST_TAG }} \
               --platform managed \
               --allow-unauthenticated \
               --port 80
