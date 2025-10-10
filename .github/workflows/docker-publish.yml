@@ -6,7 +6,6 @@ on:
             - master
         types:
             - closed
-            - 'releases/**'
 
 env:
     PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -15,8 +14,25 @@ env:
     REGION: us-west1
 
 jobs:
+    release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+        steps:
+          - uses: actions/checkout@v2
+          - uses: actions/setup-node@v2
+            with:
+                node-version: 16
+          - run: npm ci
+          - run: npm run build
+          - run: npx semantic-release
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
     deploy:
-        #if: github.event.pull_request.merged == true
+        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         permissions:
             contents: 'read'
