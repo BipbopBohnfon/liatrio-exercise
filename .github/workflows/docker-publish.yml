@@ -1,10 +1,8 @@
 name: Deploy
 
 on:
-    workflow_run:
-        workflows: [Release]
-        types:
-          - completed
+    release:
+        types: [released]
 
 env:
     PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
