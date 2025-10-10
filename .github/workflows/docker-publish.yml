@@ -11,6 +11,7 @@ env:
     GCP_SERVICE_ACCOUNT: 'githubaction@gen-lang-client-0653191359.iam.gserviceaccount.com'
     SERVICE: liatrio-my-name-chris
     REGION: us-west1
+    LATEST_TAG: LATEST_TAG=$(gh api repos/${{ github.repository }}/releases --jq '.[0].tag_name')
 
 jobs:
     deploy:
@@ -29,20 +30,20 @@ jobs:
         - name: Run Container
           run: docker run -d -p 80:80 --name golang-server liatrio-my-name-chris:latest
 
-        - name: Get latest tag (including pre-releases)
-          id: latest_tag
-          run: |
-              LATEST_TAG=$(gh api repos/${{ github.repository }}/releases --jq '.[0].tag_name')
-              echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
-          env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        - name: Get latest tag (including pre-releases)
+#          id: latest_tag
+#          run: |
+#             
+#              echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+#          env:
+#              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
 
         - name: Push Image to Dockerhub
           run: |
             docker login -u kristoffjohnson -p ${{ secrets.DOCKER_HUB_TOKEN }}
-            docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:$LATEST_TAG
-            docker push kristoffjohnson/liatrio-my-name-chris:$LATEST_TAAG
+            docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:${{ env.LATEST_TAG }}
+            docker push kristoffjohnson/liatrio-my-name-chris:${{ env.LATEST_TAG }}
             docker tag liatrio-my-name-chris:latest kristoffjohnson/liatrio-my-name-chris:latest
             docker push kristoffjohnson/liatrio-my-name-chris:latest
 
@@ -63,7 +64,7 @@ jobs:
             gcloud run deploy ${{ env.SERVICE }} \
               --project ${{ secrets.GCP_PROJECT_ID }} \
               --region ${{ env.REGION }} \
-              --image docker.io/kristoffjohnson/liatrio-my-name-chris:$LATEST_TAG \
+              --image docker.io/kristoffjohnson/liatrio-my-name-chris:${{ env.LATEST_TAG }} \
               --platform managed \
               --allow-unauthenticated \
               --port 80
