@@ -10,10 +10,10 @@
 	<a href="https://github.com/BipbopBohnfon/liatrio-exercise/actions">
 		<img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/BipbopBohnfon/liatrio-exercise/docker-image-testing.yml?branch=master&style=flat-square">
 	</a>
-	<a href="https://goreportcard.com/report/github.com/liatrio/liatrio-otel-collector">
+	<a href="https://goreportcard.com/report/github.com/BipbopBohnfon/liatrio-exercise?style=flat-square">
 		<img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/BipbopBohnfon/liatrio-exercise?style=flat-square">
 	</a>
-	<a href="https://github.com/liatrio/liatrio-otel-collector/releases">
+	<a href="https://github.com/BipbopBohnfon/liatrio-exercise/releases">
 		<img alt="GitHub release" src="https://img.shields.io/github/v/release/BipbopBohnfon/liatrio-exercise?include_prereleases&style=flat-square">
 	</a>
 </p>
