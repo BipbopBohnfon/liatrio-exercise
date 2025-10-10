@@ -1,11 +1,16 @@
 name: Deploy
 
 on:
-    pull_request_target:
+    push:
         branches:
-            - master
-        types:
-            - closed
+            - testing
+
+#on:
+#    pull_request_target:
+#        branches:
+#            - master
+#        types:
+#            - closed
 
 env:
     PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -25,11 +30,16 @@ jobs:
           - uses: actions/setup-node@v2
             with:
                 node-version: 16
-          - run: npm ci
-          - run: npm run build
-          - run: npx semantic-release
+                cache: 'npm'
+
+          - name: Install Deps
+            run: npm ci
+
+          - name: Run Semantic Release
             env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            run: npx semantic-release --debug
+            
           
     deploy:
         if: github.event.pull_request.merged == true
