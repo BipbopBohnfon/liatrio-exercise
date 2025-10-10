@@ -1,11 +1,8 @@
 name: Deploy
 
 on:
-    pull_request_target:
-        branches:
-            - master
-        types:
-            - closed
+    release:
+        types: [published]
 
 env:
     PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -15,7 +12,6 @@ env:
 
 jobs:
     deploy:
-        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         permissions:
             contents: 'read'
