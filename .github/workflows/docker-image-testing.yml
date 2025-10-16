@@ -3,9 +3,7 @@ name: Docker Image CI Testing
 on:
     push:
         branches:
-            - testing
-            - master
-            - 'releases/**'
+            - '**'
     pull_request:
         branches:
             - testing
