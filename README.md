@@ -20,7 +20,7 @@
 
 ## Introduction
 
-This project is made as part of the evaluation for the Liatrio Internship. It is a basic web server that sends anyone connecting a Json object containing my name and a Unix timestamp. There's not much to see here but take a look if you'd like. There's also some github actions action going on here.
+This here project is made as part of the evaluation for the Liatrio Internship. It is a basic web server that sends anyone connecting a Json object containing my name and a Unix timestamp. There's not much to see here but take a look if you'd like. There's also some github actions action going on here.
 
 ## Usage
 
