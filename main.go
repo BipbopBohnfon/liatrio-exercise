@@ -16,9 +16,7 @@ type Response struct {
 func main() {
     // Initialize a new Fiber app
     app := fiber.New()
-    colors := []string{"black", "white", "red", "green", 
-    		       "yellow", "blue", "brown", "orange",
-		       "pink", "purple", "gray"}
+    colors := []string{"pink", "purple"}
 
     // Define a route for the GET method on the root path '/'
     app.Get("/", func(c fiber.Ctx) error {
